@@ -7,5 +7,4 @@ public class UserRequestDto {
 
 	private String emailOrMobile;
 	
-	private String password;
 }

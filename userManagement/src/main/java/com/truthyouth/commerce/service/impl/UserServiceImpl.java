@@ -55,13 +55,13 @@ public class UserServiceImpl implements UserService{
 		 Optional<User> existingUser = userRepository.findByMobileNo(userRequestDto.getMobileNo());
 		    ResponseEntity<?> responseDto = (ResponseEntity<?>) existingUser.map(user -> {
 		    	 throw new GlobalException("You are already registered with us, please login.");
+		    	 
 		    }).orElseGet(() -> {
 		        User user = new User();
 		        UserRole role = userRoleRepository.findByType(RoleEnums.ROLE_USER.toString());
 		        user.setMobileNo(userRequestDto.getMobileNo());
 		        user.setFullName(userRequestDto.getFullName());
 		        user.setRole(role);
-		        user.setStatus("ACTIVE");
 		        user.setLoginAllowed(true);
 		        user.setOtp("111111");		        
 		        userRepository.save(user);
@@ -75,15 +75,18 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public ResponseEntity<?> userLogin(UserRequestDto userRequestDto) {
-//		User user = userRepository.findByEmail(userRequestDto.getEmailOrMobile());
-//		ResponseDto responseDto = new ResponseDto();
-//		if(user == null) {
-//			user = userRepository.findByMobileNo(userRequestDto.getEmailOrMobile());
-//			if(user == null) {
-//				responseDto.setData("Invalid Email or Mobile no.");
-//			}
-//		}
-		return null;
+		 Optional<User> existingUser = userRepository.findByMobileNo(userRequestDto.getEmailOrMobile());
+	    ResponseEntity<?> responseDto = (ResponseEntity<?>) existingUser.map(user -> {
+		        user.setOtp("111111");		        
+		        userRepository.save(user);
+		        ResponseDto successResponseDto = new ResponseDto();
+		        successResponseDto.setMessage("Successfully send otp to your mobile no.");
+		        successResponseDto.setStatus("success");
+		        return ResponseEntity.ok(successResponseDto);
+	    }).orElseGet(() -> {
+	    	 throw new GlobalException("You are not registered with us, please signup.");
+	    });
+		return responseDto;
 	}
 
 	@Override

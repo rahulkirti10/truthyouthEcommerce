@@ -14,10 +14,14 @@ public abstract class BaseEntity {
 	@Column(name = "date_updated", nullable = false)
 	protected Date dateUpdated;
 	
+	@Column(name = "status", nullable = false)
+	protected String status;
+	
 	public BaseEntity() {
 		super();
 	    this.dateCreated = new Date();
 	    this.dateUpdated = new Date();
+	    this.status = "ACTIVE";
 	}
 
 	public Date getDateCreated() {
@@ -31,6 +35,14 @@ public abstract class BaseEntity {
 	public Date getDateUpdated() {
 		return dateUpdated;
 	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}	
+	
+	public String getStatus() {
+		return status;
+	}	
 
 	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
