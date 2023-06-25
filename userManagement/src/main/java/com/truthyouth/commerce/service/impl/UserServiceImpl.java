@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService{
 	                    .httpOnly(true)
 	                    .maxAge(86400)
 	                    .domain(".3.6.54.65")
-	                    .secure(true)
+	                    .secure(false)
 	                    .path("/")
 	                    .build();
 	            response.addHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
