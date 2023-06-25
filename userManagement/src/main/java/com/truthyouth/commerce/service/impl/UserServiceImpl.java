@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public ResponseEntity<?> verifyOtp(UserSignupRequestDto userRequestDto, HttpServletResponse response) {
-	    Optional<User> existingUser = userRepository.findByMobileNo(userRequestDto.getAuthToken());
+	    Optional<User> existingUser = userRepository.findByLoginAuthToken(userRequestDto.getAuthToken());
 	    ResponseEntity<?> responseDto = (ResponseEntity<?>) existingUser.map(user -> {
 	    	ResponseDto successResponseDto = new ResponseDto();
 	        if (user.getOtp().equals(userRequestDto.getOtp())) {
