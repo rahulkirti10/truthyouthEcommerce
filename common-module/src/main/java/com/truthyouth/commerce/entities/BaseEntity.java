@@ -5,7 +5,10 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
+import lombok.Data;
+
 @MappedSuperclass
+@Data
 public abstract class BaseEntity {
 	
 	@Column(name = "date_created", nullable = false, updatable = false)
@@ -35,8 +38,8 @@ public abstract class BaseEntity {
 		return dateUpdated;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatus(String statu) {
+		this.status = statu;
 	}	
 	
 	public String getStatus() {

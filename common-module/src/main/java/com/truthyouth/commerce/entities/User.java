@@ -16,10 +16,17 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User extends BaseEntity implements Serializable, UserDetails {
 	
 	/**
@@ -47,7 +54,7 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 	
 	private boolean emailVerified;
 	
-	private String status;
+//	PRIVATE STRING STATUS;
 	
 	@OneToOne
 	private UserRole role;
