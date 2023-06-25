@@ -7,6 +7,8 @@ public class UserSignupRequestDto {
 	
 	private String mobileNo;
 	
+	private String authToken;
+	
 	private String fullName;
 	
 	private String otp;
