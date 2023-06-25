@@ -17,7 +17,6 @@ import com.truthyouth.commerce.service.UserService;
 
 @RestController
 @RequestMapping("/api/v1/user")
-@CrossOrigin(allowedHeaders = "*", origins = "*")
 public class UserController {
 	
 	@Autowired
