@@ -2,6 +2,7 @@ package com.truthyouth.commerce.service.impl;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -63,11 +64,13 @@ public class UserServiceImpl implements UserService{
 		        user.setFullName(userRequestDto.getFullName());
 		        user.setRole(role);
 		        user.setLoginAllowed(true);
-		        user.setOtp("111111");		        
+		        user.setOtp("111111");	
+		        user.setLoginAuthToken(UUID.randomUUID().toString().replaceAll("-", ""));
 		        userRepository.save(user);
 		        ResponseDto successResponseDto = new ResponseDto();
 		        successResponseDto.setMessage("Successfully send otp to your mobile no.");
 		        successResponseDto.setStatus("success");
+		        successResponseDto.setData(user.getLoginAuthToken());
 		        return ResponseEntity.ok(successResponseDto);
 		    });
 			return responseDto;
@@ -77,11 +80,13 @@ public class UserServiceImpl implements UserService{
 	public ResponseEntity<?> userLogin(UserRequestDto userRequestDto) {
 		 Optional<User> existingUser = userRepository.findByMobileNo(userRequestDto.getEmailOrMobile());
 	    ResponseEntity<?> responseDto = (ResponseEntity<?>) existingUser.map(user -> {
-		        user.setOtp("111111");		        
+		        user.setOtp("111111");		  
+		        user.setLoginAuthToken(UUID.randomUUID().toString().replaceAll("-", ""));
 		        userRepository.save(user);
 		        ResponseDto successResponseDto = new ResponseDto();
 		        successResponseDto.setMessage("Successfully send otp to your mobile no.");
 		        successResponseDto.setStatus("success");
+		        successResponseDto.setData(user.getLoginAuthToken());
 		        return ResponseEntity.ok(successResponseDto);
 	    }).orElseGet(() -> {
 	    	 throw new GlobalException("You are not registered with us, please signup.");
