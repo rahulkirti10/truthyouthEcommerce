@@ -14,7 +14,6 @@ public abstract class BaseEntity {
 	@Column(name = "date_updated", nullable = false)
 	protected Date dateUpdated;
 	
-	@Column(name = "status")
 	protected String status;
 	
 	public BaseEntity() {
