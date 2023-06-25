@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService{
 	                    .sameSite("Strict")
 	                    .httpOnly(true)
 	                    .maxAge(86400)
-	                    .domain(".truthyouth.in")
+	                    .domain("localhost")
 	                    .secure(true)
 	                    .path("/")
 	                    .build();
