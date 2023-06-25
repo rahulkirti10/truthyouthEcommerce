@@ -54,7 +54,6 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 	
 	private boolean emailVerified;
 	
-//	PRIVATE STRING STATUS;
 	
 	@OneToOne
 	private UserRole role;
