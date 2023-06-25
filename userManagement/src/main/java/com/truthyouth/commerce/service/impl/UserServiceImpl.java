@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService{
 	                    .sameSite("Strict")
 	                    .httpOnly(true)
 	                    .maxAge(86400)
-	                    .domain("http://3.6.54.65")
+	                    .domain(".3.6.54.65")
 	                    .secure(true)
 	                    .path("/")
 	                    .build();
