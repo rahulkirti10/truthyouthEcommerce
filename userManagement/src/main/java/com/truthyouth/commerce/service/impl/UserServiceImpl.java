@@ -111,11 +111,13 @@ public class UserServiceImpl implements UserService{
 	            successResponseDto.setStatus("success");
 	            String jwtToken = TokenUtility.createJWT(user, appSecret, authToken, new ArrayList<>());
 	            String origin = "";
+	            String sameSite = "Lax";
 	            if (request.getHeader("Origin").toString().startsWith("http://3.6.54.65")) {
 	                origin = ".3.6.54.65";
+	                sameSite = "Strict";
 	            }
 	            final ResponseCookie responseCookie = ResponseCookie.from("authToken", jwtToken)
-	                    .sameSite("Strict")
+	                    .sameSite(sameSite)
 	                    .httpOnly(true)
 	                    .maxAge(86400)
 	                    .domain(origin)
