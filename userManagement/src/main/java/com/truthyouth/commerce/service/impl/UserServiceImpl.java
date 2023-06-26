@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService{
 	            successResponseDto.setStatus("success");
 	            String jwtToken = TokenUtility.createJWT(user, appSecret, authToken, new ArrayList<>());
 	            String origin = "";
-	            String sameSite = "Lax";
+	            String sameSite = "None";
 	            if (request.getHeader("Origin").toString().startsWith("http://3.6.54.65")) {
 	                origin = ".3.6.54.65";
 	                sameSite = "Strict";
