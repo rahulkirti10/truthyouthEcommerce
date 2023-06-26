@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
@@ -46,6 +47,12 @@ public class UserServiceImpl implements UserService{
 	
 	@Value("${jwt.app.secret}")
 	private String appSecret;
+	
+	@Value("${access.control.origin}")
+	private String localorigin;
+	
+	@Value("${access.control.origin.dev}")
+	private String devorigin;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -95,7 +102,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public ResponseEntity<?> verifyOtp(UserSignupRequestDto userRequestDto, HttpServletResponse response) {
+	public ResponseEntity<?> verifyOtp(UserSignupRequestDto userRequestDto, HttpServletResponse response, HttpServletRequest request) {
 	    Optional<User> existingUser = userRepository.findByLoginAuthToken(userRequestDto.getAuthToken());
 	    ResponseEntity<?> responseDto = (ResponseEntity<?>) existingUser.map(user -> {
 	    	ResponseDto successResponseDto = new ResponseDto();
@@ -103,11 +110,18 @@ public class UserServiceImpl implements UserService{
 	            successResponseDto.setMessage("Otp successfully matched.");
 	            successResponseDto.setStatus("success");
 	            String jwtToken = TokenUtility.createJWT(user, appSecret, authToken, new ArrayList<>());
+	            String origin = "";
+	            if(request.getHeader("Origin").toString().indexOf("http://localhost") == 1) {
+	            	origin = "localhost";
+	            }
+	            else if(request.getHeader("Origin").toString().indexOf("http://3.6.54.65") == 1) {
+	            	origin = ".3.6.54.65";
+	            }
 	            final ResponseCookie responseCookie = ResponseCookie.from("authToken", jwtToken)
 	                    .sameSite("Strict")
 	                    .httpOnly(true)
 	                    .maxAge(86400)
-	                    .domain(".3.6.54.65")
+	                    .domain(origin)
 	                    .secure(false)
 	                    .path("/")
 	                    .build();

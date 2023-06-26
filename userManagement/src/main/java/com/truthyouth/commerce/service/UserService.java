@@ -1,5 +1,6 @@
 package com.truthyouth.commerce.service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,9 @@ public interface UserService {
 
 	ResponseEntity<?> userLogin(UserRequestDto userRequestDto);
 
-	ResponseEntity<?> verifyOtp(UserSignupRequestDto userRequestDto, HttpServletResponse response);
-
 	ResponseEntity<?> getProfile();
+
+	ResponseEntity<?> verifyOtp(UserSignupRequestDto userRequestDto, HttpServletResponse response,
+			HttpServletRequest request);
 
 }

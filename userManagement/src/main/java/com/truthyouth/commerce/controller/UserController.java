@@ -1,5 +1,6 @@
 package com.truthyouth.commerce.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/verifyOtp")
-	public ResponseEntity<?> verifyOtp(@RequestBody UserSignupRequestDto userRequestDto, HttpServletResponse response){
-		return userService.verifyOtp(userRequestDto, response);
+	public ResponseEntity<?> verifyOtp(@RequestBody UserSignupRequestDto userRequestDto, HttpServletResponse response, HttpServletRequest request){
+		return userService.verifyOtp(userRequestDto, response, request);
 	}
 	
 	@PostMapping("/login")
