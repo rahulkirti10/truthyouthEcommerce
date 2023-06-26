@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService{
 	            String jwtToken = TokenUtility.createJWT(user, appSecret, authToken, new ArrayList<>());
 	            String origin = "";
 	            if (request.getHeader("Origin").toString().startsWith("http://localhost")) {
-	                origin = "localhost";
+	                origin = ".localhost";
 	            } else if (request.getHeader("Origin").toString().startsWith("http://3.6.54.65")) {
 	                origin = ".3.6.54.65";
 	            }
