@@ -27,7 +27,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseEntity implements Serializable, UserDetails {
+public class Admin extends BaseEntity implements Serializable, UserDetails {
 	
 	/**
 	 * 
@@ -53,8 +53,6 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 	private boolean loginAllowed;
 	
 	private boolean emailVerified;
-	
-	private String loginAuthToken;
 	
 	private String password;
 	

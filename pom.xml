@@ -9,5 +9,7 @@
   <modules>
   	<module>userManagement</module>
   	<module>common-module</module>
+  	<module>adminModule</module>
+  	<module>adminManagement</module>
   </modules>
 </project>
