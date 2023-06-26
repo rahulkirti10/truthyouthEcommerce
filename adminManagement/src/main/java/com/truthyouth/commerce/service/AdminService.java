@@ -14,4 +14,8 @@ public interface AdminService {
 
 	ResponseEntity<?> adminSignup(UserSignupRequestDto requestDto);
 
+	ResponseEntity<?> getProfile();
+
+	ResponseEntity<?> adminLogout(HttpServletResponse response, HttpServletRequest request);
+
 }

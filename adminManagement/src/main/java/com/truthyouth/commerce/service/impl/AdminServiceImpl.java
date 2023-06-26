@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import com.truthyouth.commerce.dto.request.UserRequestDto;
 import com.truthyouth.commerce.dto.request.UserSignupRequestDto;
 import com.truthyouth.commerce.dto.response.ResponseDto;
+import com.truthyouth.commerce.dto.response.UserResponseDto;
 import com.truthyouth.commerce.entities.Admin;
 import com.truthyouth.commerce.entities.User;
 import com.truthyouth.commerce.entities.UserRole;
@@ -30,6 +31,7 @@ import com.truthyouth.commerce.repository.AdminRepository;
 import com.truthyouth.commerce.repository.UserRepository;
 import com.truthyouth.commerce.repository.UserRoleRepository;
 import com.truthyouth.commerce.service.AdminService;
+import com.truthyouth.commerce.utility.AppUtility;
 import com.truthyouth.commerce.utility.TokenUtility;
 
 @Service
@@ -95,8 +97,8 @@ public class AdminServiceImpl implements AdminService{
 	    		}
 	    		
 	    		String jwtToken = TokenUtility.createJWT(user, appSecret, authToken, new ArrayList<>());
-	            String origin = "";
-	            String sameSite = "None";
+	            String origin = "localhost";
+	            String sameSite = "Strict";
 	            if (request.getHeader("Origin").toString().startsWith("http://3.6.54.65")) {
 	                origin = ".3.6.54.65";
 	                sameSite = "Strict";
@@ -122,6 +124,53 @@ public class AdminServiceImpl implements AdminService{
 	    	 throw new GlobalException("Invalid username and password.");
 	    });
 		return responseDto;
+	}
+
+	@Override
+	public ResponseEntity<?> getProfile() {
+		Admin user = AppUtility.getCurrentUser();
+		if(user == null) {
+			throw new GlobalException("User must be logged in!!");
+		}
+		UserResponseDto dto = modelMapper.map(user, UserResponseDto.class);
+		
+		ResponseDto successResponseDto = new ResponseDto();
+        successResponseDto.setMessage("Successfully get admin profile");
+        successResponseDto.setStatus("success");
+        successResponseDto.setData(dto);
+        return ResponseEntity.ok(successResponseDto);
+	}
+
+	@Override
+	public ResponseEntity<?> adminLogout(HttpServletResponse response, HttpServletRequest request) {
+		Admin user = AppUtility.getCurrentUser();
+		if(user == null) {
+			throw new GlobalException("User must be logged in!!");
+		}
+		String jwtToken = TokenUtility.createJWT(user, appSecret, authToken, new ArrayList<>());
+        String origin = "localhost";
+        String sameSite = "Strict";
+        if (request.getHeader("Origin").toString().startsWith("http://3.6.54.65")) {
+            origin = ".3.6.54.65";
+            sameSite = "Strict";
+        }
+        final ResponseCookie responseCookie = ResponseCookie.from("authToken", "")
+                .sameSite(sameSite)
+                .httpOnly(true)
+                .maxAge(0)
+                .domain(origin)
+                .path("/")
+                .build();
+        response.addHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+		response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        
+		
+		ResponseDto successResponseDto = new ResponseDto();
+        successResponseDto.setMessage("Successfully logout");
+        successResponseDto.setStatus("success");
+        return ResponseEntity.ok(successResponseDto);
 	}
 
 
