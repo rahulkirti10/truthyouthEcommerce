@@ -11,6 +11,9 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -22,10 +25,12 @@ import com.truthyouth.commerce.dto.request.UserRequestDto;
 import com.truthyouth.commerce.dto.request.UserSignupRequestDto;
 import com.truthyouth.commerce.dto.response.ResponseDto;
 import com.truthyouth.commerce.dto.response.UserResponseDto;
+import com.truthyouth.commerce.entities.SearchKeywords;
 import com.truthyouth.commerce.entities.User;
 import com.truthyouth.commerce.entities.UserRole;
 import com.truthyouth.commerce.enums.RoleEnums;
 import com.truthyouth.commerce.exception.GlobalException;
+import com.truthyouth.commerce.repository.SearchKeywordsRepository;
 import com.truthyouth.commerce.repository.UserRepository;
 import com.truthyouth.commerce.repository.UserRoleRepository;
 import com.truthyouth.commerce.service.UserService;
@@ -41,6 +46,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserRoleRepository userRoleRepository;
+	
+	@Autowired
+	private SearchKeywordsRepository searchKeywordsRepository;
 	
 	@Value("${jwt.token}")
 	private String authToken;

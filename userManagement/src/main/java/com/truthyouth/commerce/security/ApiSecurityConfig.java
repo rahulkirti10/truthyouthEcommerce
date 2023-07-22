@@ -57,7 +57,8 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers( "/staticPage", "/app.js",
 				"/rpg-socket/**", "/topic/greetings",
 				"/v2/api-docs", "/v3/api-docs", "/configuration/ui", "/swagger-resources/**", "/ configuration/security",
-				"/swagger-ui/**", "/webjars/**", "/api/v1/user/signup", "/api/v1/user/login", "/api/v1/user/verifyOtp");
+				"/swagger-ui/**", "/webjars/**", "/api/v1/user/signup", "/api/v1/user/login", "/api/v1/user/verifyOtp", 
+				"/api/v1/product/homeSearch");
 	}
 
 }
