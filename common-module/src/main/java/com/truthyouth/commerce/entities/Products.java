@@ -41,6 +41,8 @@ public class Products extends BaseEntity{
 	
 	private String materialAndCare;
 	
+	private String frontImageUrl;
+	
 	@ManyToOne
 	@JsonBackReference
 	private ProductCategories productCategories;

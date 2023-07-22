@@ -14,7 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.truthyouth.commerce.dto.response.ProductResponseDto;
+import com.truthyouth.commerce.dto.response.ProductSizesResponseDto;
 import com.truthyouth.commerce.dto.response.ResponseDto;
+import com.truthyouth.commerce.entities.Products;
+import com.truthyouth.commerce.entities.ProductsSizes;
 import com.truthyouth.commerce.entities.SearchKeywords;
 import com.truthyouth.commerce.repository.ProductsRepository;
 import com.truthyouth.commerce.repository.SearchKeywordsRepository;
@@ -46,6 +50,30 @@ public class ProductServiceImpl implements ProductService{
 		
 		ResponseDto successResponseDto = new ResponseDto();
 		successResponseDto.setMessage("Successfully get search.");
+		successResponseDto.setStatus("success");
+		successResponseDto.setData(list);
+		return ResponseEntity.ok(successResponseDto);
+	}
+
+	@Override
+	public ResponseEntity<?> getProductByKeyword(String keyword, Integer pageNo) {
+		Pageable pageable = PageRequest.of(pageNo, 50);
+		keyword = "%" + keyword + "%";
+		Page<Products> products = productsRepository.findByKeywordAllProduct(keyword, pageable);
+		List<ProductResponseDto> list = new ArrayList<>();
+		for(Products product : products.getContent()) {
+			ProductResponseDto productResponseDto = new ProductResponseDto();
+			productResponseDto.setDescription(product.getColor());
+			productResponseDto.setDescription(product.getDescription());
+			productResponseDto.setDiscountedPrice(product.getDiscountedPrice());
+			productResponseDto.setMaterialAndCare(product.getMaterialAndCare());
+			productResponseDto.setName(product.getName());
+			productResponseDto.setOriginalPrice(product.getOriginalPrice());
+			productResponseDto.setFrontImageUrl(product.getFrontImageUrl());
+			list.add(productResponseDto);;
+			}
+		ResponseDto successResponseDto = new ResponseDto();
+		successResponseDto.setMessage("Successfully get all product.");
 		successResponseDto.setStatus("success");
 		successResponseDto.setData(list);
 		return ResponseEntity.ok(successResponseDto);

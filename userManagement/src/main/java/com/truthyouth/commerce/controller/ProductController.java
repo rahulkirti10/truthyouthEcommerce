@@ -20,4 +20,9 @@ public class ProductController {
 	public ResponseEntity<?> homeSearch(@RequestParam("keyword") String keyword){
 		return productService.homeSearch(keyword);
 	}
+	
+	@GetMapping("/getProductByKeyword")
+	public ResponseEntity<?> getProductByKeyword(@RequestParam("keyword") String keyword, @RequestParam("pageNo") Integer pageNo){
+		return productService.getProductByKeyword(keyword, pageNo);
+	}
 }
