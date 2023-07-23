@@ -41,18 +41,18 @@ public class ProductServiceImpl implements ProductService{
 		List<SearchKeywords> keywords = searchKeywordsRepository.findByKeyword(keyword);
 		List<Map<String, Object>> list = new ArrayList<>();
 		for(SearchKeywords searchKeywords : keywords) {
-			int countProduct = productsRepository.findByKeyword("%" + searchKeywords.getKeywords() + "%");
+			//int countProduct = productsRepository.findByKeyword("%" + searchKeywords.getKeywords() + "%");
 			Map<String, Object> map = new HashMap<>();
 			map.put("title", searchKeywords.getKeywords());
-			map.put("count", countProduct);
+			//map.put("count", countProduct);
 			list.add(map);
 		}
 		
-		ResponseDto successResponseDto = new ResponseDto();
-		successResponseDto.setMessage("Successfully get search.");
-		successResponseDto.setStatus("success");
-		successResponseDto.setData(list);
-		return ResponseEntity.ok(successResponseDto);
+//		ResponseDto successResponseDto = new ResponseDto();
+//		successResponseDto.setMessage("Successfully get search.");
+//		successResponseDto.setStatus("success");
+//		successResponseDto.setData(list);
+		return ResponseEntity.ok(list);
 	}
 
 	@Override
