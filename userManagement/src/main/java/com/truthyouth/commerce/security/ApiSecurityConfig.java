@@ -58,7 +58,7 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/rpg-socket/**", "/topic/greetings",
 				"/v2/api-docs", "/v3/api-docs", "/configuration/ui", "/swagger-resources/**", "/ configuration/security",
 				"/swagger-ui/**", "/webjars/**", "/api/v1/user/signup", "/api/v1/user/login", "/api/v1/user/verifyOtp", 
-				"/api/v1/product/homeSearch");
+				"/api/v1/product/homeSearch", "/api/v1/product/getProductByKeyword", "/api/v1/product/getProductById");
 	}
 
 }

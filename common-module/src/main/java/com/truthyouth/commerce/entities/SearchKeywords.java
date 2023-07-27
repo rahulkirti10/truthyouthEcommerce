@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class SearchKeywords extends BaseEntity{
+public class SearchKeywords{
 
 	/**
 	 * 

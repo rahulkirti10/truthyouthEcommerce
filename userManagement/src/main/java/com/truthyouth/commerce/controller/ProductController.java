@@ -25,4 +25,9 @@ public class ProductController {
 	public ResponseEntity<?> getProductByKeyword(@RequestParam("keyword") String keyword, @RequestParam("pageNo") Integer pageNo){
 		return productService.getProductByKeyword(keyword, pageNo);
 	}
+	
+	@GetMapping("/getProductById")
+	public ResponseEntity<?> getProductById(@RequestParam("id") long id){
+		return productService.getProductById(id);
+	}
 }

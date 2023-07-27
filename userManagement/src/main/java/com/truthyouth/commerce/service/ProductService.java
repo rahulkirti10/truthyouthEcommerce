@@ -7,4 +7,6 @@ public interface ProductService {
 	ResponseEntity<?> homeSearch(String keyword);
 
 	ResponseEntity<?> getProductByKeyword(String keyword, Integer pageNo);
+
+	ResponseEntity<?> getProductById(long id);
 }

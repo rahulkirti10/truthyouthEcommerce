@@ -56,10 +56,10 @@ public class UserServiceImpl implements UserService{
 	@Value("${jwt.app.secret}")
 	private String appSecret;
 	
-	@Value("${access.control.origin}")
+	@Value("${access.controll.origin}")
 	private String localorigin;
 	
-	@Value("${access.control.origin.dev}")
+	@Value("${access.controll.origin.dev}")
 	private String devorigin;
 	
 	@Autowired
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService{
 	            successResponseDto.setStatus("success");
 	            String jwtToken = TokenUtility.createJWT(user, appSecret, authToken, new ArrayList<>());
 	            String origin = "";
-	            String sameSite = "None";
+	            String sameSite = "Strict";
 	            if (request.getHeader("Origin").toString().startsWith("http://3.6.54.65")) {
 	                origin = ".3.6.54.65";
 	                sameSite = "Strict";
