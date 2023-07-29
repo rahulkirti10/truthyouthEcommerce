@@ -57,33 +57,51 @@ public class ProductServiceImpl implements ProductService{
 	public ResponseEntity<?> getProductByKeyword(String keyword, Integer pageNo) {
 		Pageable pageable = PageRequest.of(pageNo, 50);
 		keyword = "%" + keyword + "%";
-		Page<Products> products = productsRepository.findByKeywordAllProduct(keyword, pageable);
-		List<ProductResponseDto> list = new ArrayList<>();
-		for(Products product : products.getContent()) {
-			ProductResponseDto productResponseDto = new ProductResponseDto();
-			productResponseDto.setColor(product.getColor());
-			productResponseDto.setDescription(product.getDescription());
-			productResponseDto.setDiscountedPrice(product.getDiscountedPrice());
-			productResponseDto.setMaterialAndCare(product.getMaterialAndCare());
-			productResponseDto.setName(product.getName());
-			productResponseDto.setOriginalPrice(product.getOriginalPrice());
-			productResponseDto.setFrontImageUrl(product.getFrontImageUrl());
-			list.add(productResponseDto);;
-			}
-		ResponseDto successResponseDto = new ResponseDto();
-		successResponseDto.setMessage("Successfully get all product.");
-		successResponseDto.setStatus("success");
-		successResponseDto.setData(list);
-		return ResponseEntity.ok(successResponseDto);
+		if(keyword.equalsIgnoreCase("all")) {
+			Page<Products> products = productsRepository.findAll(pageable);
+			List<ProductResponseDto> list = new ArrayList<>();
+			for(Products product : products.getContent()) {
+				ProductResponseDto productResponseDto = new ProductResponseDto();
+				productResponseDto.setColor(product.getColor());
+				productResponseDto.setDescription(product.getDescription());
+				productResponseDto.setDiscountedPrice(product.getDiscountedPrice());
+				productResponseDto.setMaterialAndCare(product.getMaterialAndCare());
+				productResponseDto.setName(product.getName());
+				productResponseDto.setOriginalPrice(product.getOriginalPrice());
+				productResponseDto.setFrontImageUrl(product.getFrontImageUrl());
+				list.add(productResponseDto);;
+				}
+			ResponseDto successResponseDto = new ResponseDto();
+			successResponseDto.setMessage("Successfully get all product.");
+			successResponseDto.setStatus("success");
+			successResponseDto.setData(list);
+			return ResponseEntity.ok(successResponseDto);
+		}
+		else {
+			Page<Products> products = productsRepository.findByKeywordAllProduct(keyword, pageable);
+			List<ProductResponseDto> list = new ArrayList<>();
+			for(Products product : products.getContent()) {
+				ProductResponseDto productResponseDto = new ProductResponseDto();
+				productResponseDto.setColor(product.getColor());
+				productResponseDto.setDescription(product.getDescription());
+				productResponseDto.setDiscountedPrice(product.getDiscountedPrice());
+				productResponseDto.setMaterialAndCare(product.getMaterialAndCare());
+				productResponseDto.setName(product.getName());
+				productResponseDto.setOriginalPrice(product.getOriginalPrice());
+				productResponseDto.setFrontImageUrl(product.getFrontImageUrl());
+				list.add(productResponseDto);;
+				}
+			ResponseDto successResponseDto = new ResponseDto();
+			successResponseDto.setMessage("Successfully get all product.");
+			successResponseDto.setStatus("success");
+			successResponseDto.setData(list);
+			return ResponseEntity.ok(successResponseDto);
+		}
 	}
 	
 	@Override
 	public ResponseEntity<?> getProductById(long id) {
-//		Admin user = AppUtility.getCurrentUser();
-//		if(user == null) {
-//			throw new GlobalException("User must be logged in!!");
-//		}
-		//Pageable pageable = PageRequest.of(pageNo, pageSize);
+		
 		Products categories = productsRepository.findById(id).orElse(null);
 
 		ResponseDto successResponseDto = new ResponseDto();
