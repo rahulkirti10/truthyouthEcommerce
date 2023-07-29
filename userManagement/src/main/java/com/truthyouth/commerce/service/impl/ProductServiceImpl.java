@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService{
 	public ResponseEntity<?> getProductByKeyword(String keyword, Integer pageNo) {
 		Pageable pageable = PageRequest.of(pageNo, 50);
 		keyword = "%" + keyword + "%";
-		if(keyword.equalsIgnoreCase("all")) {
+		if(keyword.equalsIgnoreCase("%all%")) {
 			Page<Products> products = productsRepository.findAll(pageable);
 			List<ProductResponseDto> list = new ArrayList<>();
 			for(Products product : products.getContent()) {
