@@ -69,6 +69,7 @@ public class ProductServiceImpl implements ProductService{
 				productResponseDto.setName(product.getName());
 				productResponseDto.setOriginalPrice(product.getOriginalPrice());
 				productResponseDto.setFrontImageUrl(product.getFrontImageUrl());
+				productResponseDto.setId(product.getId());
 				list.add(productResponseDto);;
 				}
 			ResponseDto successResponseDto = new ResponseDto();

@@ -23,6 +23,8 @@ private String name;
 	
 	private String frontImageUrl;
 	
+	private long id;
+	
 	private List<ProductImagesResponseDto> imagesResponseDtos;
 	
 	private List<ProductSizesResponseDto> productSizesResponseDtos;
