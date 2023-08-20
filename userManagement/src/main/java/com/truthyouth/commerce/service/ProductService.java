@@ -13,4 +13,6 @@ public interface ProductService {
 	ResponseEntity<?> getProductById(long id);
 
 	ResponseEntity<?> addToCart(AddToCartRequestDto addToCartRequestDto);
+
+	ResponseEntity<?> getCartDetails();
 }

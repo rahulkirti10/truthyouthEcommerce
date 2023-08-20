@@ -21,6 +21,8 @@ public class Cart {
 	@GenericGenerator(name = "native", strategy = "native")
 	private Long id;
 	
+	private int quantity;
+	
 	@OneToOne
 	private Products products;
 	

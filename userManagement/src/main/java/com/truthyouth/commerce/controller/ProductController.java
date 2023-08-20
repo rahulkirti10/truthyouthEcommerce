@@ -38,4 +38,9 @@ public class ProductController {
 	public ResponseEntity<?> addToCart(@RequestBody AddToCartRequestDto addToCartRequestDto){
 		return productService.addToCart(addToCartRequestDto);
 	}
+	
+	@GetMapping("/getCartDetails")
+	public ResponseEntity<?> getCartDetails(){
+		return productService.getCartDetails();
+	}
 }

@@ -151,5 +151,39 @@ public class ProductServiceImpl implements ProductService{
         return ResponseEntity.ok(successResponseDto);
 	}
 
+	@Override
+	public ResponseEntity<?> getCartDetails() {
+		User user = AppUtility.getCurrentUser();
+		
+		if(user == null)
+			throw new GlobalException("User not loggedIn.");
+		
+		List<Cart> cart = cartRepository.findByUser(user);
+		
+		List<Map<String, Object>> list = new ArrayList<>();
+		for(Cart c : cart) {
+			Map<String, Object> map = new HashMap<>();
+			Products product = c.getProducts();
+			ProductResponseDto productResponseDto = new ProductResponseDto();
+			productResponseDto.setColor(product.getColor());
+			productResponseDto.setDescription(product.getDescription());
+			productResponseDto.setDiscountedPrice(product.getDiscountedPrice());
+			productResponseDto.setMaterialAndCare(product.getMaterialAndCare());
+			productResponseDto.setName(product.getName());
+			productResponseDto.setOriginalPrice(product.getOriginalPrice());
+			productResponseDto.setFrontImageUrl(product.getFrontImageUrl());
+			map.put("product", productResponseDto);
+			map.put("id", c.getId());
+			map.put("quantity", c.getQuantity());
+			list.add(map);
+		}
+			
+		ResponseDto successResponseDto = new ResponseDto();
+        successResponseDto.setMessage("Successfully get cart details...");
+        successResponseDto.setStatus("success");
+        successResponseDto.setData(list);
+        return ResponseEntity.ok(successResponseDto);
+	}
+
 	
 }
