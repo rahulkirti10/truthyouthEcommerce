@@ -3,10 +3,13 @@ package com.truthyouth.commerce.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.truthyouth.commerce.dto.request.AddToCartRequestDto;
 import com.truthyouth.commerce.service.ProductService;
 
 @RestController
@@ -29,5 +32,10 @@ public class ProductController {
 	@GetMapping("/getProductById")
 	public ResponseEntity<?> getProductById(@RequestParam("id") long id){
 		return productService.getProductById(id);
+	}
+	
+	@PostMapping("/addToCart")
+	public ResponseEntity<?> addToCart(@RequestBody AddToCartRequestDto addToCartRequestDto){
+		return productService.addToCart(addToCartRequestDto);
 	}
 }

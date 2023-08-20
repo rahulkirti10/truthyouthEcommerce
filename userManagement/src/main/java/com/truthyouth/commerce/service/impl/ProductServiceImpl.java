@@ -14,16 +14,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.truthyouth.commerce.dto.request.AddToCartRequestDto;
 import com.truthyouth.commerce.dto.response.ProductResponseDto;
 import com.truthyouth.commerce.dto.response.ProductSizesResponseDto;
 import com.truthyouth.commerce.dto.response.ResponseDto;
 import com.truthyouth.commerce.entities.Admin;
+import com.truthyouth.commerce.entities.Cart;
 import com.truthyouth.commerce.entities.Products;
 import com.truthyouth.commerce.entities.ProductsSizes;
 import com.truthyouth.commerce.entities.SearchKeywords;
+import com.truthyouth.commerce.entities.User;
 import com.truthyouth.commerce.exception.GlobalException;
+import com.truthyouth.commerce.repository.CartRepository;
 import com.truthyouth.commerce.repository.ProductsRepository;
 import com.truthyouth.commerce.repository.SearchKeywordsRepository;
+import com.truthyouth.commerce.repository.UserRepository;
 import com.truthyouth.commerce.service.ProductService;
 import com.truthyouth.commerce.utility.AppUtility;
 
@@ -36,6 +41,12 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Autowired
 	private ProductsRepository productsRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private CartRepository cartRepository;
 	
 	@Override
 	public ResponseEntity<?> homeSearch(String keyword) {
@@ -109,6 +120,34 @@ public class ProductServiceImpl implements ProductService{
         successResponseDto.setMessage("Successfully get product...");
         successResponseDto.setStatus("success");
         successResponseDto.setData(categories);
+        return ResponseEntity.ok(successResponseDto);
+	}
+
+	@Override
+	public ResponseEntity<?> addToCart(AddToCartRequestDto addToCartRequestDto) {
+		User user = AppUtility.getCurrentUser();
+		
+		if(user == null)
+			throw new GlobalException("User not loggedIn.");
+		
+		Products products = productsRepository.findById(addToCartRequestDto.getProductId()).orElse(null);
+		
+		if(products == null)
+			throw new GlobalException("Product not found.");
+		
+		Cart cart = cartRepository.findByUserAndProducts(user, products);
+		
+		if(cart == null)
+			throw new GlobalException("Product already added in Cart.");
+		
+		cart = new Cart();
+		cart.setProducts(products);
+		cart.setUser(user);
+		cartRepository.save(cart);
+		
+		ResponseDto successResponseDto = new ResponseDto();
+        successResponseDto.setMessage("Successfully save product in cart...");
+        successResponseDto.setStatus("success");
         return ResponseEntity.ok(successResponseDto);
 	}
 
