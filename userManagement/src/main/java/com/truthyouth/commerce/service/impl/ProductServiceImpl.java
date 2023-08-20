@@ -137,7 +137,7 @@ public class ProductServiceImpl implements ProductService{
 		
 		Cart cart = cartRepository.findByUserAndProducts(user, products);
 		
-		if(cart == null)
+		if(cart != null)
 			throw new GlobalException("Product already added in Cart.");
 		
 		cart = new Cart();
