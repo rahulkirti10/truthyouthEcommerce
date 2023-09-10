@@ -143,6 +143,7 @@ public class ProductServiceImpl implements ProductService{
 		cart = new Cart();
 		cart.setProducts(products);
 		cart.setUser(user);
+		cart.setQuantity(1);
 		cartRepository.save(cart);
 		
 		ResponseDto successResponseDto = new ResponseDto();
